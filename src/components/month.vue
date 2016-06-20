@@ -4,6 +4,7 @@
     <div v-for="temp in temps">{{temp.date}}, {{temp.temperature}}</div>
     <button @click="getPrevMonthTemps()" v-if="offset > maxOffset">prev</button>
     <button @click="getNextMonthTemps()" v-if="offset < 0">next</button>
+    <chart :data="temps"></chart>
   </div>
 </template>
 
@@ -14,8 +15,13 @@
     getPrevMonthTemps,
     getMaxMonthOffset
   } from 'actions/month.js';
+  import Chart from 'components/chart.vue';
 
   export default {
+    components: {
+      'chart': Chart
+    },
+
     vuex: {
       getters: {
         temps: function (state) {

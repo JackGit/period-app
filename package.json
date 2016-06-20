@@ -19,6 +19,7 @@
     "highcharts": "^4.2.5",
     "material-ui-vue": "^0.1.4",
     "moment": "^2.13.0",
+    "victor": "^1.1.0",
     "vue": "^1.0.21",
     "vue-resource": "^0.7.4",
     "vue-router": "^0.7.13",

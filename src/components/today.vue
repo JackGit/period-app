@@ -5,6 +5,7 @@
     <div>period: {{temp.period}}</div>
     <button @click="handleClick()" v-if="!temp.id">add today data</button>
     <button @click="update()" v-if="temp.id">update</button>
+    <spinner></spinner>
   </div>
 </template>
 
@@ -14,8 +15,13 @@
     createTodayTemp,
     updateTodayTemp
   } from 'actions/today.js';
+  import Spinner from 'components/spinner.vue';
 
   export default {
+    components: {
+      'spinner': Spinner
+    },
+
     vuex: {
       getters: {
         temp: function (state) {
