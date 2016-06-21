@@ -1,5 +1,5 @@
 import API from 'api';
-import { assembleTempObjFromResultObj } from './utils.js';
+import { assembleTempObjFromResultObj } from 'assets/js/utils.js';
 import {
   RECEIVE_TODAY_DATA,
   UPDATE_TODAY_DATA

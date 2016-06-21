@@ -4,7 +4,7 @@
     <div v-for="temp in temps">{{temp.date}}, {{temp.temperature}}</div>
     <button @click="getPrevWeekTemps()" v-if="offset > maxOffset">prev</button>
     <button @click="getNextWeekTemps()" v-if="offset < 0">next</button>
-    <chart :data="temps"></chart>
+    <chart :data="temps" :start-date="startDate" :end-date="endDate" mode="week"></chart>
   </div>
 </template>
 
@@ -32,6 +32,12 @@
         },
         maxOffset: function (state) {
           return state.week.weekOffsetMax * -1;
+        },
+        startDate: function (state) {
+          return state.week.dateBoundry[0];
+        },
+        endDate: function (state) {
+          return state.week.dateBoundry[1];
         }
       },
       actions: {

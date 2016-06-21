@@ -1,10 +1,11 @@
 import API from 'api';
 import moment from 'moment';
-import { assembleTempObjFromResultObj } from './utils.js';
+import { assembleTempObjFromResultObj } from 'assets/js/utils.js';
 import {
   RECEIVE_MONTH_DATA,
   UPDATE_MONTH_OFFSET,
-  UPDATE_MONTH_OFFSET_MAX
+  UPDATE_MONTH_OFFSET_MAX,
+  UPDATE_MONTH_DATE_BOUNDRY
 } from '../mutation-types.js';
 
 export const getMaxMonthOffset = (store) => {
@@ -30,6 +31,7 @@ export const getThisMonthTemps = (store) => {
     );
 
     store.dispatch(UPDATE_MONTH_OFFSET, 0);
+    store.dispatch(UPDATE_MONTH_DATE_BOUNDRY, startDate, endDate);
   });
 };
 
@@ -47,6 +49,7 @@ export const getNextMonthTemps = (store) => {
     );
 
     store.dispatch(UPDATE_MONTH_OFFSET, offset);
+    store.dispatch(UPDATE_MONTH_DATE_BOUNDRY, startDate, endDate);
   });
 };
 
@@ -64,5 +67,6 @@ export const getPrevMonthTemps = (store) => {
     );
 
     store.dispatch(UPDATE_MONTH_OFFSET, offset);
+    store.dispatch(UPDATE_MONTH_DATE_BOUNDRY, startDate, endDate);
   });
 };

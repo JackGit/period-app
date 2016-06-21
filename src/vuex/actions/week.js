@@ -1,10 +1,11 @@
 import API from 'api';
 import moment from 'moment';
-import { assembleTempObjFromResultObj } from './utils.js';
+import { assembleTempObjFromResultObj } from 'assets/js/utils.js';
 import {
   RECEIVE_WEEK_DATA,
   UPDATE_WEEK_OFFSET,
-  UPDATE_WEEK_OFFSET_MAX
+  UPDATE_WEEK_OFFSET_MAX,
+  UPDATE_WEEK_DATE_BOUNDRY
 } from '../mutation-types.js';
 
 export const getMaxWeekOffset = (store) => {
@@ -30,6 +31,7 @@ export const getThisWeekTemps = (store) => {
     );
 
     store.dispatch(UPDATE_WEEK_OFFSET, 0);
+    store.dispatch(UPDATE_WEEK_DATE_BOUNDRY, startDate, endDate);
   });
 };
 
@@ -47,6 +49,7 @@ export const getNextWeekTemps = (store) => {
     );
 
     store.dispatch(UPDATE_WEEK_OFFSET, offset);
+    store.dispatch(UPDATE_WEEK_DATE_BOUNDRY, startDate, endDate);
   });
 };
 
@@ -64,5 +67,6 @@ export const getPrevWeekTemps = (store) => {
     );
 
     store.dispatch(UPDATE_WEEK_OFFSET, offset);
+    store.dispatch(UPDATE_WEEK_DATE_BOUNDRY, startDate, endDate);
   });
 };

@@ -4,150 +4,205 @@
 
 <script>
   import Highcharts from 'highcharts';
+  import {
+    fillWeekTempData,
+    fillMonthTempData
+  } from 'assets/js/utils.js';
 
-  let options = {
-    chart: {
-      type: 'spline'
-    },
-    title: {
-      text: ''
-    },
-    subtitle: {
-      text: ''
-    },
-    credits: {
-      enabled: false
-    },
-    exporting: {
-      enabled: false
-    },
-    legend: {
-      enabled: false
-    },
-    xAxis: {
-      type: 'datetime',
-      labels: {
-        overflow: 'justify'
+  Highcharts.setOptions({
+    global: {
+      useUTC: false
+    }
+  });
+
+  let chart;
+  const MAX_TEMP = 41;
+  const MIN_TEMP = 36;
+  const bandsOptions = (function () {
+    var bands = [];
+    for (var i = MIN_TEMP - 1; i < MAX_TEMP; i++) {
+      bands.push({
+        from: i,
+        to: i + 1,
+        color: i % 2 !== 0 ? 'rgba(68, 170, 213, 0.1)' : 'rgba(0, 0, 0, 0)',
+        label: {
+          text: i + '',
+          style: {
+            color: '#606060'
+          }
+        }
+      });
+    }
+    return bands;
+  })();
+  const PERIOD_AREA_COLOR = 'rgba(255, 144, 210, .2)';
+  const weekLabelFormatter = function () {
+    return Highcharts.dateFormat('%a', this.value);
+  };
+  const monthLabelFormatter = function () {
+    return Highcharts.dateFormat('%d', this.value);
+  };
+
+  function getChartOptions (startDate, endDate, mode, data, plotBands) {
+    return {
+      chart: {
+        type: 'spline'
       },
-      // categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      lineWidth: 0,
-      tickLength: 0,
-      plotBands: [{ // visualize the weekend
-        from: Date.UTC(2015, 5, 3, 0, 0, 0),
-        to: Date.UTC(2015, 5, 6, 0, 0, 0),
-        color: 'rgba(255, 144, 210, .2)'
-      }]
-    },
-    yAxis: {
       title: {
         text: ''
       },
-      labels: {
+      subtitle: {
+        text: ''
+      },
+      credits: {
         enabled: false
       },
-      min: 35.5,
-      max: 42.0,
-      minorGridLineWidth: 0,
-      gridLineWidth: 0,
-      alternateGridColor: null,
-      plotBands: [{ // Light air
-        from: 34,
-        to: 35,
-        color: 'rgba(68, 170, 213, 0.1)',
-        label: {
-          text: '34',
-          style: {
-            color: '#606060'
-          }
-        }
-      }, { // Light breeze
-        from: 35,
-        to: 36,
-        color: 'rgba(0, 0, 0, 0)',
-        label: {
-          text: '35',
-          style: {
-            color: '#606060'
-          }
-        }
-      }, { // Gentle breeze
-        from: 36,
-        to: 37,
-        color: 'rgba(68, 170, 213, 0.1)',
-        label: {
-          text: '36',
-          style: {
-            color: '#606060'
-          }
-        }
-      }, { // Moderate breeze
-        from: 37,
-        to: 38,
-        color: 'rgba(0, 0, 0, 0)',
-        label: {
-          text: '37',
-          style: {
-            color: '#606060'
-          }
-        }
-      }, { // Fresh breeze
-        from: 38,
-        to: 39,
-        color: 'rgba(68, 170, 213, 0.1)',
-        label: {
-          text: '38',
-          style: {
-            color: '#606060'
-          }
-        }
-      }]
-    },
-    plotOptions: {
-      spline: {
-        lineWidth: 1,
-        states: {
-          hover: {
-            lineWidth: 2
-          }
+      exporting: {
+        enabled: false
+      },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        type: 'datetime',
+        labels: {
+          overflow: 'justify',
+          formatter: mode === 'week' ? weekLabelFormatter : monthLabelFormatter
         },
-        marker: {
+        min: parseDate(startDate),
+        max: parseDate(endDate),
+        lineWidth: 0,
+        tickLength: 5,
+        tickInterval: mode === 'week' ? 24 * 3600 * 1000 : 24 * 3600 * 1000 * 5,
+        plotBands: plotBands
+      },
+      yAxis: {
+        title: {
+          text: ''
+        },
+        labels: {
           enabled: false
         },
-        pointInterval: 3600000 * 24, // one day
-        pointStart: Date.UTC(2015, 4, 31, 0, 0, 0)
-      }
-    },
-    series: [{
-      name: 'Hestavollane',
-      data: []
-    }]
-  };
+        min: MIN_TEMP,
+        max: MAX_TEMP,
+        minorGridLineWidth: 0,
+        gridLineWidth: 0,
+        alternateGridColor: null,
+        plotBands: bandsOptions
+      },
+      plotOptions: {
+        spline: {
+          lineWidth: 1,
+          states: {
+            hover: {
+              lineWidth: 2
+            }
+          },
+          marker: {
+            enabled: true
+          },
+          pointInterval: 3600000 * 24 // one day
+        }
+      },
+      series: [{
+        name: null,
+        data: data
+      }]
+    };
+  }
 
-  let chart;
+  function parseDate (date, h, m, s) {
+    return Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+      h === undefined ? date.getUTCHours() : h,
+      m === undefined ? date.getUTCMinutes() : m,
+      s === undefined ? date.getUTCSeconds() : s
+    );
+  }
+
+  function getPeriodBands (data) {
+    return data.filter(function (d) {
+      return d.period;
+    }).map(function (d) {
+      return {
+        from: parseDate(d.date, 0, 0, 0),
+        to: parseDate(new Date(d.date * 1 + 24 * 3600 * 1000), 0, 0, 0),
+        color: PERIOD_AREA_COLOR
+      };
+    });
+  }
 
   export default {
     props: {
       data: {
         type: Array,
         default: function () {
-          return [];
+          return []; // {date, temperature, period}
         }
+      },
+      mode: {
+        type: String,
+        default: 'week' // week, month
+      },
+      startDate: {
+        type: Date,
+        required: true
+      },
+      endDate: {
+        type: Date,
+        required: true
+      }
+    },
+
+    computed: {
+      tempDates: function () {
+        var fillMethod = this.mode === 'week' ? fillWeekTempData : fillMonthTempData;
+        var filledData = fillMethod(this.startDate, this.data); // filled temp data, make sure there is a record for each day
+
+        return filledData.filter(function (d) {
+          return d.temperature;
+        }).map(function (d) {
+          return [parseDate(d.date), d.temperature];
+        });
       }
     },
 
     watch: {
-      data: function (value) {
-        var data = value.map(function (t) {
-          return t.temperature;
-        });
-
-        chart.series[0].setData(data);
+      tempDates: function () {
+        this.refresh();
       }
     },
 
     ready: function () {
-      console.log('ready chart');
-      window.chart = chart = Highcharts.chart('container', options);
+      this.refresh();
+    },
+
+    methods: {
+      refresh: function () {
+        window.chart = chart = Highcharts.chart('container', getChartOptions(this.startDate, this.endDate, this.mode, this.tempDates, getPeriodBands(this.data)));
+        chart.series[1];
+        /*
+        chart.series[0].update({
+          pointStart: parseDate(this.startDate),
+          data: this.tempDates
+        });
+
+        chart.xAxis[0].update({
+          min: parseDate(this.startDate),
+          max: parseDate(this.endDate)
+        });
+
+        chart.xAxis[0].update({
+          labels: {
+            overflow: 'justify',
+            formatter: this.mode === 'week' ? weekLabelFormatter : monthLabelFormatter
+          },
+          tickInterval: this.mode === 'week' ? 24 * 3600 * 1000 : 24 * 3600 * 1000 * 5
+        });
+        */
+      }
     }
   };
 </script>
