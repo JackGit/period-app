@@ -1,5 +1,5 @@
 <template>
-  <div id="container" style="min-width:310px;height:400px;margin: 0 auto"></div>
+  <div id="chartMountNode"></div>
 </template>
 
 <script>
@@ -9,13 +9,6 @@
     fillMonthTempData
   } from 'assets/js/utils.js';
 
-  Highcharts.setOptions({
-    global: {
-      useUTC: false
-    }
-  });
-
-  let chart;
   const MAX_TEMP = 41;
   const MIN_TEMP = 36;
   const bandsOptions = (function () {
@@ -63,6 +56,10 @@
       legend: {
         enabled: false
       },
+      tooltip: {
+        enabled: false,
+        followTouchMove: false
+      },
       xAxis: {
         type: 'datetime',
         labels: {
@@ -105,7 +102,7 @@
         }
       },
       series: [{
-        name: null,
+        name: 'temp',
         data: data
       }]
     };
@@ -123,7 +120,7 @@
   }
 
   function getPeriodBands (data) {
-    return data.filter(function (d) {
+    /* return data.filter(function (d) {
       return d.period;
     }).map(function (d) {
       return {
@@ -131,8 +128,16 @@
         to: parseDate(new Date(d.date * 1 + 24 * 3600 * 1000), 0, 0, 0),
         color: PERIOD_AREA_COLOR
       };
-    });
+    }); */
+    PERIOD_AREA_COLOR;
+    return [];
   }
+
+  Highcharts.setOptions({
+    global: {
+      useUTC: false
+    }
+  });
 
   export default {
     props: {
@@ -181,27 +186,13 @@
 
     methods: {
       refresh: function () {
-        window.chart = chart = Highcharts.chart('container', getChartOptions(this.startDate, this.endDate, this.mode, this.tempDates, getPeriodBands(this.data)));
-        chart.series[1];
-        /*
-        chart.series[0].update({
-          pointStart: parseDate(this.startDate),
-          data: this.tempDates
-        });
-
-        chart.xAxis[0].update({
-          min: parseDate(this.startDate),
-          max: parseDate(this.endDate)
-        });
-
-        chart.xAxis[0].update({
-          labels: {
-            overflow: 'justify',
-            formatter: this.mode === 'week' ? weekLabelFormatter : monthLabelFormatter
-          },
-          tickInterval: this.mode === 'week' ? 24 * 3600 * 1000 : 24 * 3600 * 1000 * 5
-        });
-        */
+        Highcharts.chart('chartMountNode', getChartOptions(
+          this.startDate,
+          this.endDate,
+          this.mode,
+          this.tempDates,
+          getPeriodBands(this.data))
+        );
       }
     }
   };

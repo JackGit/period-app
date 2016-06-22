@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <h4>week data {{offset}}</h4>
-    <div v-for="temp in temps">{{temp.date}}, {{temp.temperature}}</div>
-    <button @click="getPrevWeekTemps()" v-if="offset > maxOffset">prev</button>
-    <button @click="getNextWeekTemps()" v-if="offset < 0">next</button>
+  <main class="week-main">
     <chart :data="temps" :start-date="startDate" :end-date="endDate" mode="week"></chart>
-  </div>
+    <week-list :data="temps"></week-list>
+  </main>
 </template>
 
 <script>
@@ -15,11 +12,15 @@
     getPrevWeekTemps,
     getMaxWeekOffset
   } from 'actions/week.js';
-  import Chart from 'components/chart.vue';
+  import Chart from 'components/Chart.vue';
+  import Editor from 'components/Editor.vue';
+  import List from 'components/List.vue';
 
   export default {
     components: {
-      'chart': Chart
+      'chart': Chart,
+      'editor': Editor,
+      'week-list': List
     },
 
     vuex: {

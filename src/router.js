@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Today from 'components/today.vue';
-import Week from 'components/week.vue';
-import Month from 'components/month.vue';
+import Today from 'components/today/Today.vue';
+import Week from 'components/week/Week.vue';
+import Month from 'components/month/Month.vue';
 
 Vue.use(VueRouter);
 
