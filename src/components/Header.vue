@@ -1,5 +1,5 @@
 <template>
-  <navbar logo="week" log-href='#!' logo-position="center">
+  <navbar :logo="$route.name" log-href='#!' logo-position="center">
   </navbar>
 </template>
 

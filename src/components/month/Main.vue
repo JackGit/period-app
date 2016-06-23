@@ -1,6 +1,12 @@
+<style>
+  .month-main .main-top {
+    margin-bottom: 10px;
+  }
+</style>
+
 <template>
   <main class="month-main">
-    <chart :data="temps" :start-date="startDate" :end-date="endDate" mode="month"></chart>
+    <chart :data="temps" :start-date="startDate" :end-date="endDate" mode="month" class="main-top"></chart>
     <week-list :data="temps"></week-list>
   </main>
 </template>

@@ -1,15 +1,13 @@
 <template>
-  <div class="row">
-    <collection class="col s12" style="border: none">
-      <collection-item v-for="item in data" style="padding: 15px 20px;">
-        <div>
-          {{item.date | dateFormat}}
-          <span v-if="item.period" class="secondary-content red light-2 white-text">{{item.temperature | tempFormat}} &deg;C</span>
-          <span v-else class="secondary-content">{{item.temperature | tempFormat}} &deg;C</span>
-        </div>
-      </collection-item>
-    </collection>
-  </div>
+  <collection style="border: none">
+    <collection-item v-for="item in data" style="padding: 15px 20px;">
+      <div>
+        {{item.date | dateFormat}}
+        <span v-if="item.period" class="secondary-content red light-2 white-text">{{item.temperature | tempFormat}} &deg;C</span>
+        <span v-else class="secondary-content">{{item.temperature | tempFormat}} &deg;C</span>
+      </div>
+    </collection-item>
+  </collection>
 </template>
 
 <script>

@@ -1,16 +1,16 @@
 <style>
-  .main-top {
+  .today-main .main-top {
     display: flex;
     flex-direction: column ;
     justify-content: center;
     align-items: center;
     height: 260px;
-    border-bottom: 1px dashed lightgrey;
+    margin-bottom: 10px;
   }
-  .main-top h4 {
+  .today-main .main-top h4 {
     font-size: 4em;
   }
-  .main-top h4 span {
+  .today-main .main-top h4 span {
     font-size: 0.5em;
   }
 </style>

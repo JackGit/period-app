@@ -39,7 +39,10 @@
   function getChartOptions (startDate, endDate, mode, data, plotBands) {
     return {
       chart: {
-        type: 'spline'
+        type: 'spline',
+        marginLeft: 0,
+        marginRight: 0,
+        marginTop: 0
       },
       title: {
         text: ''
@@ -68,9 +71,9 @@
         },
         min: parseDate(startDate),
         max: parseDate(endDate),
-        lineWidth: 0,
+        lineWidth: 1,
         tickLength: 5,
-        tickInterval: mode === 'week' ? 24 * 3600 * 1000 : 24 * 3600 * 1000 * 5,
+        tickInterval: mode === 'week' ? 24 * 3600 * 1000 : 24 * 3600 * 1000 * 2,
         plotBands: plotBands
       },
       yAxis: {
