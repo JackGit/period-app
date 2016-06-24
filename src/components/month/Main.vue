@@ -6,7 +6,13 @@
 
 <template>
   <main class="month-main">
-    <chart :data="temps" :start-date="startDate" :end-date="endDate" mode="month" class="main-top"></chart>
+    <card class="z-depth-0">
+      <card-action>
+        <a class="left" @click="getPrevMonthTemps()" v-if="offset > maxOffset">prev</a>
+        <a class="right" @click="getNextMonthTemps()" v-if="offset < 0">next</a>
+      </card-action>
+      <chart :data="temps" :start-date="startDate" :end-date="endDate" mode="month" class="main-top"></chart>
+    </card>
     <week-list :data="temps"></week-list>
   </main>
 </template>
@@ -21,12 +27,16 @@
   import Chart from 'components/Chart.vue';
   import Editor from 'components/Editor.vue';
   import List from 'components/List.vue';
+  import Card from 'material-ui-vue/components/cards/card.vue';
+  import CardAction from 'material-ui-vue/components/cards/card-action.vue';
 
   export default {
     components: {
       'chart': Chart,
       'editor': Editor,
-      'week-list': List
+      'week-list': List,
+      'card': Card,
+      'card-action': CardAction
     },
 
     vuex: {

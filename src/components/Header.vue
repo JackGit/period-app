@@ -1,5 +1,5 @@
 <template>
-  <navbar :logo="$route.name" log-href='#!' logo-position="center">
+  <navbar :logo="$route.name | uppercase " logo-href='javascript:void(0)' logo-position="center" :auto-hide="false">
   </navbar>
 </template>
 

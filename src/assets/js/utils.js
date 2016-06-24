@@ -8,7 +8,8 @@ export const assembleTempObjFromResultObj = (result) => {
     temperature: result.get('temperature'),
     period: result.get('period'),
     date: result.get('date'),
-    dateString: result.get('dateString') // '2016 06 20'
+    dateString: result.get('dateString'), // '2016 06 20',
+    updatedAt: result.get('udpatedAt')
   };
 };
 

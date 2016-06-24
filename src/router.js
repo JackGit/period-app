@@ -1,8 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Today from 'components/today/Today.vue';
-import Week from 'components/week/Week.vue';
-import Month from 'components/month/Month.vue';
 
 Vue.use(VueRouter);
 
@@ -11,16 +8,26 @@ const router = new VueRouter();
 router.map({
   '/today': {
     name: 'today',
-    component: Today
+    component: function (resolve) {
+      require(['components/today/Today.vue'], resolve);
+    }
   },
   '/week': {
     name: 'week',
-    component: Week
+    component: function (resolve) {
+      require(['components/week/Week.vue'], resolve);
+    }
   },
   '/month': {
     name: 'month',
-    component: Month
+    component: function (resolve) {
+      require(['components/month/Month.vue'], resolve);
+    }
   }
+});
+
+router.redirect({
+  '/': '/today'
 });
 
 export default router;

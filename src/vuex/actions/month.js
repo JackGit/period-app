@@ -70,3 +70,7 @@ export const getPrevMonthTemps = (store) => {
     store.dispatch(UPDATE_MONTH_DATE_BOUNDRY, startDate, endDate);
   });
 };
+
+export const clearMonthTemps = (store) => {
+  store.dispatch(RECEIVE_MONTH_DATA, []);
+};

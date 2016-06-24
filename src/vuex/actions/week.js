@@ -70,3 +70,7 @@ export const getPrevWeekTemps = (store) => {
     store.dispatch(UPDATE_WEEK_DATE_BOUNDRY, startDate, endDate);
   });
 };
+
+export const clearWeekTemps = (store) => {
+  store.dispatch(RECEIVE_WEEK_DATA, []);
+};

@@ -1,5 +1,5 @@
 <template>
-  <div id="chartMountNode"></div>
+  <div id="chartMountNode" style="height:40vh"></div>
 </template>
 
 <script>
@@ -8,6 +8,7 @@
     fillWeekTempData,
     fillMonthTempData
   } from 'assets/js/utils.js';
+  import moment from 'moment';
 
   const MAX_TEMP = 41;
   const MIN_TEMP = 36;
@@ -37,6 +38,14 @@
   };
 
   function getChartOptions (startDate, endDate, mode, data, plotBands) {
+    var subTitle = '';
+
+    if (mode === 'week') {
+      subTitle = moment(startDate).format('YYYY.MM.DD') + '~' + moment(endDate).format('YYYY.MM.DD');
+    } else if (mode === 'month') {
+      subTitle = moment(startDate).format('MMM YYYY');
+    }
+
     return {
       chart: {
         type: 'spline',
@@ -48,7 +57,7 @@
         text: ''
       },
       subtitle: {
-        text: ''
+        text: subTitle
       },
       credits: {
         enabled: false

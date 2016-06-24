@@ -1,13 +1,10 @@
 <template>
   <div class="row">
     <div class="row col s12">
-      <text-field label="temperature" :value.sync="temperature"></text-field>
+      <input v-model="temperature" type="number" style="text-align:center;font-size:1.6em;">
     </div>
-    <div class="row col s12">
-      <switch right-label="Yes" left-label="No" :value.sync="period"></switch>
-    </div>
-    <div class="row col s12">
-      <btn @click="handleSubmit()" class="right">Submit</btn>
+    <div class="row col s12" style="text-align:center">
+      <btn @click="handleSubmit()">Submit</btn>
     </div>
   </div>
 </template>

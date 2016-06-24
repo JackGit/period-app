@@ -1,11 +1,6 @@
 <style>
-  footer {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-  }
   footer .tabs {
-    background-color: #f5f5f5;
+    background-color: #e8e8e8;
   }
 </style>
 
