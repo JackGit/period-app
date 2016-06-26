@@ -12,7 +12,7 @@
 
 <template>
   <collection style="border: none">
-    <collection-item v-for="item in data" style="padding: 15px 20px;" transition="slide" stagger="300">
+    <collection-item v-for="item in data" style="padding: 15px 20px;" transition="slide" stagger="100">
       <div>
         {{item.date | dateFormat}}
         <span v-if="item.period" class="secondary-content red light-2 white-text">{{item.temperature | tempFormat}} &deg;C</span>

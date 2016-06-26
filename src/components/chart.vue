@@ -132,17 +132,15 @@
   }
 
   function getPeriodBands (data) {
-    /* return data.filter(function (d) {
+    return data.filter(function (d) {
       return d.period;
     }).map(function (d) {
       return {
-        from: parseDate(d.date, 0, 0, 0),
-        to: parseDate(new Date(d.date * 1 + 24 * 3600 * 1000), 0, 0, 0),
+        from: parseDate(d.date, -8, 0, 0),
+        to: parseDate(new Date(d.date * 1 + 24 * 3600 * 1000), -8, 0, 0),
         color: PERIOD_AREA_COLOR
       };
-    }); */
-    PERIOD_AREA_COLOR;
-    return [];
+    });
   }
 
   Highcharts.setOptions({

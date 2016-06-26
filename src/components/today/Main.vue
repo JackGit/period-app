@@ -144,7 +144,6 @@
         this.showEditor = true;
       },
       submitToday: function (temperature, period) {
-        console.log('submiting', temperature, period, this.temp.id);
         if (!this.temp.id) {
           this.createTodayTemp({
             date: new Date(),

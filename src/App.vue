@@ -17,7 +17,7 @@
     width: 100%;
   }
   .fade-transition {
-    transition: all .3s ease;
+    transition: all .1s ease;
     opacity: 1;
   }
   .fade-enter, .fade-leave {

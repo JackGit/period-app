@@ -7,7 +7,7 @@
 <template>
   <footer>
     <tabs>
-      <tab v-for="tab in tabs" :label="tab" :active="$route.name === tab" @click="handleClickTab(tab)">
+      <tab v-for="tab in tabs" :label="tab" :active="$route.name === tab" v-touch:tap="handleClickTab(tab)">
       </tab>
     </tabs>
   </footer>

@@ -21,7 +21,6 @@
 
     route: {
       deactivate: function (transition) {
-        console.log('route.deactivate');
         this.clearWeekTemps();
         transition.next();
       }
