@@ -25,7 +25,7 @@
     getMaxMonthOffset
   } from 'actions/month.js';
   import Chart from 'components/Chart.vue';
-  import Editor from 'components/Editor.vue';
+  import Editor from 'components/EditPage.vue';
   import List from 'components/List.vue';
   import Card from 'material-ui-vue/components/cards/card.vue';
   import CardAction from 'material-ui-vue/components/cards/card-action.vue';

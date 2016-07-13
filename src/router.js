@@ -23,6 +23,12 @@ router.map({
     component: function (resolve) {
       require(['components/month/Month.vue'], resolve);
     }
+  },
+  '/edit': {
+    name: 'edit',
+    component: function (resolve) {
+      require(['components/EditPage.vue'], resolve);
+    }
   }
 });
 

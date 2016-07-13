@@ -22,6 +22,10 @@
 
   export default {
     props: {
+      id: {
+        type: String,
+        default: ''
+      },
       temperature: {
         type: String,
         required: true,
@@ -52,6 +56,7 @@
 
     methods: {
       handleSubmit: function () {
+        Materialize.toast('', 1000);
         this.submit && this.submit(this.temperature * 1, this.period);
       }
     }

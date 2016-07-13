@@ -79,7 +79,6 @@
     getThisWeekTemps
   } from 'actions/week.js';
   import Chart from 'components/Chart.vue';
-  import Editor from 'components/Editor.vue';
   import Card from 'material-ui-vue/components/cards/card.vue';
   import CardAction from 'material-ui-vue/components/cards/card-action.vue';
   import moment from 'moment';
@@ -87,7 +86,6 @@
   export default {
     components: {
       'week-chart': Chart,
-      'editor': Editor,
       'card': Card,
       'card-action': CardAction
     },
