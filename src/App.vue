@@ -17,7 +17,7 @@
     width: 100%;
   }
   .fade-transition {
-    transition: all .1s ease;
+    transition: all .05s ease;
     opacity: 1;
   }
   .fade-enter, .fade-leave {
@@ -32,7 +32,7 @@
 <template>
   <div>
     <app-header></app-header>
-    <router-view transition="fade" transition-mode="out-in"></router-view>
+    <router-view></router-view>
     <app-footer></app-footer>
   </div>
 </template>
@@ -41,6 +41,7 @@
   import store from './vuex/store.js';
   import Header from 'components/Header.vue';
   import Footer from 'components/Footer.vue';
+  import EditPage from 'components/EditPage.vue';
 
   export default {
     replace: false,
@@ -48,7 +49,8 @@
 
     components: {
       'app-header': Header,
-      'app-footer': Footer
+      'app-footer': Footer,
+      'edit-page': EditPage
     }
   };
 </script>

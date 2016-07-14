@@ -24,7 +24,7 @@ router.map({
       require(['components/month/Month.vue'], resolve);
     }
   },
-  '/edit': {
+  '/edit/:id': {
     name: 'edit',
     component: function (resolve) {
       require(['components/EditPage.vue'], resolve);

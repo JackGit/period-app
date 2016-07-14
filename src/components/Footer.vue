@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <footer>
+  <footer v-show="$route.name !== 'edit'">
     <tabs>
       <tab v-for="tab in tabs" :label="tab" :active="$route.name === tab" v-touch:tap="handleClickTab(tab)">
       </tab>

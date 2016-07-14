@@ -58,10 +58,9 @@
 <template>
   <main class="today-main">
     <div class="main-top card z-depth-0">
-      <h4 v-if="temp.id && !showEditor" @click="update()" transition="down">{{temp.temperature}}<span>&deg;C</span></h4>
-      <p v-if="temp.id && !showEditor" class="grey-text text-lighten-1" transition="up">UPDATED AT {{temp.updatedAt | formatDate}}</p>
-      <p v-if="!temp.id && !showEditor" @click="addTodayTemp()">CLICK TO ADD DATA</p>
-      <editor v-if="showEditor" :temperature="editorTemp" :period="editorPeriod" :submit="submitToday" transition="scale"></editor>
+      <h4 v-if="temp.id" v-touch:tap="update()" transition="down">{{temp.temperature | tempFormat}}<span>&deg;C</span></h4>
+      <p v-if="temp.id" class="grey-text text-lighten-1" transition="up">UPDATED AT {{temp.updatedAt | formatDate}}</p>
+      <p v-if="!temp.id" v-touch:tap="addTodayTemp()">CLICK TO ADD DATA</p>
     </div>
     <div class="main-bottom">
       <week-chart mode="week" :data="temps" :start-date="startDate" :end-date="endDate"></week-chart>
@@ -71,10 +70,13 @@
 
 <script>
   import {
-    getTodayTemp,
-    createTodayTemp,
-    updateTodayTemp
+    getTodayTemp
   } from 'actions/today.js';
+  import {
+    updateTemperature,
+    updatePeriod,
+    updateDate
+  } from 'actions/edit.js';
   import {
     getThisWeekTemps
   } from 'actions/week.js';
@@ -88,14 +90,6 @@
       'week-chart': Chart,
       'card': Card,
       'card-action': CardAction
-    },
-
-    data: function () {
-      return {
-        showEditor: false,
-        editorTemp: '36.6',
-        editorPeriod: false
-      };
     },
 
     vuex: {
@@ -115,9 +109,10 @@
       },
       actions: {
         getTodayTemp: getTodayTemp,
-        createTodayTemp: createTodayTemp,
-        updateTodayTemp: updateTodayTemp,
-        getThisWeekTemps: getThisWeekTemps
+        getThisWeekTemps: getThisWeekTemps,
+        updateTemperature: updateTemperature,
+        updatePeriod: updatePeriod,
+        updateDate: updateDate
       }
     },
 
@@ -134,31 +129,25 @@
 
     methods: {
       update: function () {
-        this.editorTemp = this.temp.temperature + '';
-        this.editorPeriod = this.temp.period;
-        this.showEditor = true;
+        this.updateTemperature(this.temp.temperature);
+        this.updatePeriod(this.temp.period);
+        this.updateDate(new Date());
+        this.$router.go({name: 'edit', params: {id: this.temp.id}});
       },
       addTodayTemp: function () {
-        this.showEditor = true;
-      },
-      submitToday: function (temperature, period) {
-        if (!this.temp.id) {
-          this.createTodayTemp({
-            date: new Date(),
-            temperature: temperature,
-            period: period
-          });
-        } else {
-          this.updateTodayTemp(temperature, period);
-        }
-
-        this.showEditor = false;
+        this.updateTemperature('');
+        this.updatePeriod(false);
+        this.updateDate(new Date());
+        this.$router.go({name: 'edit'});
       }
     },
 
     filters: {
       formatDate: function (date) {
         return moment(date).format('YYYY/MM/DD HH:mm:ss');
+      },
+      tempFormat: function (value) {
+        return value.toFixed(1);
       }
     }
   };
