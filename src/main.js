@@ -1,7 +1,15 @@
-import Vue from 'vue';
-import VueTouch from 'vue-touch';
-import App from './App';
-import router from './router.js';
+import Vue from 'vue'
+import App from './App'
+import store from './vuex/store'
+import router from './router'
+import { currency } from 'filters/currency'
 
-Vue.use(VueTouch);
-router.start(App, 'body');
+Vue.filter('currency', currency)
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  store,
+  router,
+  render: h => h(App)
+})

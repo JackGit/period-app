@@ -1,4 +1,3 @@
-// https://github.com/shelljs/shelljs
 require('shelljs/global')
 env.NODE_ENV = 'production'
 
@@ -6,7 +5,7 @@ var path = require('path')
 var config = require('../config')
 var ora = require('ora')
 var webpack = require('webpack')
-var webpackConfig = require('./webpack.prod.conf')
+var webpackConfig = require('./webpack.prod.config')
 
 console.log(
   '  Tip:\n' +
@@ -20,7 +19,7 @@ spinner.start()
 var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
 rm('-rf', assetsPath)
 mkdir('-p', assetsPath)
-cp('-R', 'static/', assetsPath)
+cp('-R', 'static/*', assetsPath) // means npm run build has to be executed in project root path
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()

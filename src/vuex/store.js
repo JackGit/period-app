@@ -1,17 +1,17 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import today from './modules/today.js';
-import week from './modules/week.js';
-import month from './modules/month.js';
-import edit from './modules/edit.js';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import * as actions from './actions'
+import * as getters from './getters'
+import cart from './modules/cart'
+import products from './modules/products'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-export default window.store = new Vuex.Store({
+export default new Vuex.Store({
+  actions,
+  getters,
   modules: {
-    today,
-    week,
-    month,
-    edit
+    cart,
+    products
   }
-});
+})

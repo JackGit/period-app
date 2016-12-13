@@ -1,39 +1,28 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from 'components/pages/Home.vue'
+import ShoppingCart from 'components/pages/ShoppingCart.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
-const router = new VueRouter();
-
-router.map({
-  '/today': {
-    name: 'today',
-    component: function (resolve) {
-      require(['components/today/Today.vue'], resolve);
+export default new VueRouter({
+  routes: [{
+    path: '/',
+    redirect: '/home'
+  }, {
+    path: '/home',
+    name: 'home',
+    component: Home
+    /*
+    component: resolve => {
+      require.ensure(['components/post/PostList.vue'], () => {
+        resolve(require('components/post/PostList.vue'));
+      }, 'post-list');
     }
-  },
-  '/week': {
-    name: 'week',
-    component: function (resolve) {
-      require(['components/week/Week.vue'], resolve);
-    }
-  },
-  '/month': {
-    name: 'month',
-    component: function (resolve) {
-      require(['components/month/Month.vue'], resolve);
-    }
-  },
-  '/edit/:id': {
-    name: 'edit',
-    component: function (resolve) {
-      require(['components/EditPage.vue'], resolve);
-    }
-  }
-});
-
-router.redirect({
-  '/': '/today'
-});
-
-export default router;
+    */
+  }, {
+    path: '/shopping',
+    name: 'shopping',
+    component: ShoppingCart
+  }]
+})
