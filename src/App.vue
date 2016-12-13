@@ -13,5 +13,6 @@
 </template>
 
 <script>
+  import 'mint-ui/lib/style.css'
   export default {}
 </script>
