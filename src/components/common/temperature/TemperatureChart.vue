@@ -25,18 +25,30 @@
    * fill the missing data with null temperature
    */
   function enrichTemperatureRecords (temperatureRecords, startDate, totalDays) {
+    var records = []
     for (let i = 0; i < totalDays; i++) {
       let record = temperatureRecords[i]
       let date = moment(startDate).add(i, 'days').toDate()
 
       if (!record || !moment(record.date).isSame(date)) {
+        /*
         temperatureRecords.splice(i, 0, {
           temperature: null,
           period: false,
           date: date
         })
+        */
+        records.push({
+          temperature: null,
+          period: false,
+          date: date
+        })
+      } else {
+        records.push(temperatureRecords[i])
       }
     }
+    console.log(records)
+    return records
   }
 
   /**
@@ -63,13 +75,12 @@
   function createChartOptions (temperatureRecords, mode) {
     let subTitle = ''
     let categories = []
+    let options = null
     let firstDate = temperatureRecords[0].date
     let daysInMonth = moment(firstDate).daysInMonth()
     let startDate = moment(firstDate).startOf(mode).toDate()
     let endDate = moment(firstDate).endOf(mode).toDate()
-    let options = null
-
-    enrichTemperatureRecords(temperatureRecords, startDate, mode === 'week' ? 7 : daysInMonth)
+    let fullRecords = enrichTemperatureRecords(temperatureRecords, startDate, mode === 'week' ? 7 : daysInMonth)
 
     if (mode === 'week') {
       subTitle = moment(startDate).format('YYYY.MM.DD') + '~' + moment(endDate).format('YYYY.MM.DD')
@@ -130,7 +141,7 @@
         marker: {
           symbol: 'square'
         },
-        data: createChartSeriesData(testData)
+        data: createChartSeriesData(fullRecords)
       }]
     }
 
