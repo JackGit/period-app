@@ -73,6 +73,9 @@
     },
 
     methods: {
+      fetchData () {
+        console.log('fetch data for today')
+      },
       handleClickTempCard () {
         console.log('click edit todays data')
       }

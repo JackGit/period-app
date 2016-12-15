@@ -23,8 +23,8 @@
         <mt-cell title="Period">
           <mt-switch></mt-switch>
         </mt-cell>
-        <mt-cell title="Temperature">36.6</mt-cell>
-        <temperature-picker></temperature-picker>
+        <mt-cell title="Temperature">{{temperature | formatTemperature}}</mt-cell>
+        <temperature-picker @change="handleTemperatureChange" :value="temperature"></temperature-picker>
       </div>
       <div class="c-editPage__actions">
         <mt-button class="c-editPage__button" type="primary" size="large">Save</mt-button>
@@ -39,6 +39,7 @@
   import Page from 'components/common/page/Page.vue'
   import PageHeader from 'components/common/page/PageHeader.vue'
   import TemperaturePicker from 'components/common/temperature/TemperaturePicker.vue'
+  import { formatTemperature } from 'filters/filters'
 
   export default {
     components: {
@@ -50,10 +51,23 @@
       'page-header': PageHeader
     },
 
+    data () {
+      return {
+        temperature: 36.7
+      }
+    },
+
     methods: {
       handleClickCancel () {
         window.history.back()
+      },
+      handleTemperatureChange (value) {
+        this.temperature = value
       }
+    },
+
+    filters: {
+      formatTemperature
     }
   }
 </script>
