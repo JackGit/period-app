@@ -1,24 +1,18 @@
 <style>
   .c-page {
     margin-top: 50px;
+    margin-bottom: 55px;
   }
 </style>
 
 <template>
   <div class="c-page">
-    <page-header></page-header>
+    <slot name="header"></slot>
     <slot></slot>
-    <page-footer></page-footer>
+    <slot name="footer"></slot>
   </div>
 </template>
 
 <script>
-  import PageHeader from './PageHeader.vue'
-  import PageFooter from './PageFooter.vue'
-  export default {
-    components: {
-      'page-header': PageHeader,
-      'page-footer': PageFooter
-    }
-  }
+  export default {}
 </script>

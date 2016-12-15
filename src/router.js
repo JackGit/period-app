@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from 'components/pages/Home.vue'
-import ShoppingCart from 'components/pages/ShoppingCart.vue'
 import Today from 'components/pages/Today.vue'
+import Week from 'components/pages/Week.vue'
+import Month from 'components/pages/Month.vue'
 import Edit from 'components/pages/Edit.vue'
 
 Vue.use(VueRouter)
@@ -13,26 +13,19 @@ export default new VueRouter({
     name: 'today',
     component: Today
   }, {
+    path: '/week',
+    name: 'week',
+    component: Week
+  }, {
+    path: '/month',
+    name: 'month',
+    component: Month
+  }, {
     path: '/edit',
     name: 'edit',
     component: Edit
   }, {
     path: '/',
-    redirect: '/home'
-  }, {
-    path: '/home',
-    name: 'home',
-    component: Home
-    /*
-    component: resolve => {
-      require.ensure(['components/post/PostList.vue'], () => {
-        resolve(require('components/post/PostList.vue'));
-      }, 'post-list');
-    }
-    */
-  }, {
-    path: '/shopping',
-    name: 'shopping',
-    component: ShoppingCart
+    redirect: '/today'
   }]
 })

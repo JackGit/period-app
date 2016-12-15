@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "avoscloud-sdk": "^0.6.10",
+    "es6-promise": "^4.0.5",
     "highcharts": "^5.0.6",
     "mint-ui": "^2.0.5",
     "moment": "^2.17.1",

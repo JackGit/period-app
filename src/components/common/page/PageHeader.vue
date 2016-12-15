@@ -1,5 +1,8 @@
 <template>
-  <mt-header fixed title="header"></mt-header>
+  <mt-header fixed :title="title">
+    <span slot="left"><slot name="left"></slot></span>
+    <span slot="right"><slot name="right"></slot></span>
+  </mt-header>
 </template>
 
 <script>
@@ -7,6 +10,10 @@
   export default {
     components: {
       [Header.name]: Header
+    },
+
+    props: {
+      title: String
     }
   }
 </script>

@@ -1,8 +1,10 @@
 <style lang="scss">
-  $backgroundColor: lightgrey;
+  $backgroundColor: #efefef;
   body {
     background-color: $backgroundColor;
     font-family: arial;
+    margin: 0;
+    color: rgba(0,0,0,.87);
   }
 </style>
 

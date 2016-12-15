@@ -156,11 +156,24 @@
       },
       mode: {
         type: String,
-        default: 'week'
+        required: true
       }
     },
+
     mounted () {
-      Highcharts.chart(this.$refs.chartMountNode, createChartOptions(this.temperatureRecords, this.mode))
+      this.initChart()
+    },
+
+    watch: {
+      temperatureRecords () {
+        this.initChart()
+      }
+    },
+
+    methods: {
+      initChart () {
+        Highcharts.chart(this.$refs.chartMountNode, createChartOptions(this.temperatureRecords, this.mode))
+      }
     }
   }
 </script>
