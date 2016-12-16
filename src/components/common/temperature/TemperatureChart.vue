@@ -16,11 +16,17 @@
         return {
           y: record.temperature,
           marker: {
+            symbol: 'circle',
             fillColor: '#ff6767'
           }
         }
       } else {
-        return record.temperature
+        return {
+          y: record.temperature,
+          marker: {
+            radius: 3
+          }
+        }
       }
     })
   }

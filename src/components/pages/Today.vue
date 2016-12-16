@@ -10,10 +10,14 @@
 
   .c-temperatureCard.in-period {
     background-color: #ff6767;
+  }
+
+  .in-period .c-temperatureCard__digit {
     color: rgba(255,255,255,.9);
   }
 
   .c-temperatureCard__digit {
+    color: #7cb5ec;
     text-align: center;
     font-size: 50px;
     font-weight: 100;
@@ -36,10 +40,10 @@
   <page>
     <page-header slot="header" title="TODAY"></page-header>
     <div v-if="!loading">
-      <card class="c-lastPeriodReminderCard">
+      <!--<card class="c-lastPeriodReminderCard">
         <h4 slot="header">REMINDER</h4>
         <p>Your last period is 2016/11/26</p>
-      </card>
+      </card>-->
       <card :class="{'c-temperatureCard': true, 'in-period': temperatureRecordForToday.period}" v-if="temperatureRecordForToday" @click.native="handleClickTempCard">
         <h4 class="c-temperatureCard__digit">{{temperatureRecordForToday.temperature}}<span class="c-temperatureCard__unit">&deg;C</span></h4>
         <span class="c-temperatureCard__periodIcon"></span>

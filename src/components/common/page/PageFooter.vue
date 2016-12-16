@@ -1,9 +1,15 @@
+<style>
+  .c-tabIcon {
+    border-radius: 50%;
+  }
+</style>
+
 <template>
   <div>
     <mt-tabbar v-model="selected" fixed>
-      <mt-tab-item id="today"><img slot="icon">TODAY</mt-tab-item>
-      <mt-tab-item id="week"><img slot="icon">WEEK</mt-tab-item>
-      <mt-tab-item id="month"><img slot="icon">MONTH</mt-tab-item>
+      <mt-tab-item id="today"><span slot="icon" class="c-tabIcon" style="background-color:lightgreen"></span>TODAY</mt-tab-item>
+      <mt-tab-item id="week"><span slot="icon" class="c-tabIcon" style="background-color:lightseagreen"></span>WEEK</mt-tab-item>
+      <mt-tab-item id="month"><span slot="icon" class="c-tabIcon" style="background-color:lightcoral"></span>MONTH</mt-tab-item>
     </mt-tabbar>
   </div>
 
