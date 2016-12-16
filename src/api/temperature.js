@@ -4,7 +4,7 @@ import moment from 'moment'
 const Temperature = AV.Object.extend('Temperature')
 const DATE_FORMAT = 'YYYY MM DD'
 
-export createTemp = function (temp) {
+export function createTemp (temp) {
   let tempAVObj = new Temperature()
   tempAVObj.set('userId', 'jack')
   tempAVObj.set('temperature', temp.temperature)
@@ -14,26 +14,26 @@ export createTemp = function (temp) {
   return tempAVObj.save()
 }
 
-export getTemp = function (id) {
+export function getTemp (id) {
   let tempQueryObj = new AV.Query('Temperature')
   return tempQueryObj.get(id)
 }
 
-export getTodayTemp = function () {
+export function getTodayTemp () {
   let tempQueryObj = new AV.Query('Temperature')
   tempQueryObj.equalTo('userId', 'jack')
   tempQueryObj.equalTo('dateString', moment(new Date()).format(DATE_FORMAT))
-  return tempQueryObj.first();
+  return tempQueryObj.first()
 }
 
-export getTempByDate = function (date) {
+export function getTempByDate (date) {
   let tempQueryObj = new AV.Query('Temperature')
   tempQueryObj.equalTo('userId', 'jack')
   tempQueryObj.equalTo('dateString', moment(date).format(DATE_FORMAT))
-  return tempQueryObj.first();
+  return tempQueryObj.first()
 }
 
-export getTempsByDateRange = function (startDate, endDate) {
+export function getTempsByDateRange (startDate, endDate) {
   let tempQueryObj = new AV.Query('Temperature')
   tempQueryObj.equalTo('userId', 'jack')
   tempQueryObj.greaterThanOrEqualTo('date', startDate)
@@ -42,14 +42,14 @@ export getTempsByDateRange = function (startDate, endDate) {
   return tempQueryObj.find()
 }
 
-export getTheFirstTempData = function () {
+export function getTheFirstTempData () {
   let tempQueryObj = new AV.Query('Temperature')
   tempQueryObj.equalTo('userId', 'jack')
   tempQueryObj.addAscending('date')
   return tempQueryObj.first()
 }
 
-export updateTemp = function  (temp) {
+export function updateTemp (temp) {
   return getTemp(temp.id).try((tempAVObj) => {
     tempAVObj.set('period', temp.period)
     tempAVObj.set('temperature', temp.temperature)
@@ -57,7 +57,7 @@ export updateTemp = function  (temp) {
   })
 }
 
-export deleteTemp = function (id) {
-  let tempQueryObj = new AV.Query('Temperature')
-  return tempQueryObj.get(id).destroyAll()
+export function deleteTemp (id) {
+  let tempQueryObj = AV.Object.createWithoutData('Temperature', id)
+  return tempQueryObj.destroy()
 }

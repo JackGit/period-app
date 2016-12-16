@@ -8,35 +8,6 @@
   import moment from 'moment'
 
   /**
-   * fill the missing data with null temperature
-   */
-  function enrichTemperatureRecords (temperatureRecords, startDate, totalDays) {
-    var records = []
-    for (let i = 0; i < totalDays; i++) {
-      let date = moment(startDate).add(i, 'days').toDate()
-      let record = temperatureRecords.filter(r => {
-        return moment(r.date).isSame(date)
-      })[0]
-
-      if (record) {
-        records.push({
-          temperature: record.temperature,
-          period: record.period,
-          date: record.date
-        })
-      } else {
-        records.push({
-          temperature: null,
-          period: false,
-          date: date
-        })
-      }
-    }
-
-    return records
-  }
-
-  /**
    * temperatureRecords like [{temperature: 36.6, period: false}]
    */
   function createChartSeriesData (temperatureRecords) {
@@ -45,7 +16,7 @@
         return {
           y: record.temperature,
           marker: {
-            symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
+            fillColor: '#ff6767'
           }
         }
       } else {
@@ -65,7 +36,6 @@
     let daysInMonth = moment(firstDate).daysInMonth()
     let startDate = moment(firstDate).startOf(mode).toDate()
     let endDate = moment(firstDate).endOf(mode).toDate()
-    let fullRecords = enrichTemperatureRecords(temperatureRecords, startDate, mode === 'week' ? 7 : daysInMonth)
 
     if (mode === 'week') {
       subTitle = moment(startDate).format('YYYY.MM.DD') + '~' + moment(endDate).format('YYYY.MM.DD')
@@ -125,9 +95,9 @@
       series: [{
         name: 'Temperature',
         marker: {
-          symbol: 'square'
+          symbol: 'circle'
         },
-        data: createChartSeriesData(fullRecords)
+        data: createChartSeriesData(temperatureRecords)
       }]
     }
 
@@ -139,19 +109,7 @@
       temperatureRecords: {
         type: Array,
         default () {
-          return [{
-            temperature: 36.3, period: false, date: new Date(2016, 11, 4)
-          }, {
-            temperature: 36.3, period: false, date: new Date(2016, 11, 6)
-          }, {
-            temperature: 36.5, period: false, date: new Date(2016, 11, 7)
-          }, {
-            temperature: 37.1, period: true, date: new Date(2016, 11, 8)
-          }, {
-            temperature: 37.0, period: true, date: new Date(2016, 11, 9)
-          }, {
-            temperature: 36.4, period: false, date: new Date(2016, 11, 10)
-          }]
+          return []
         }
       },
       mode: {
@@ -172,7 +130,9 @@
 
     methods: {
       initChart () {
-        Highcharts.chart(this.$refs.chartMountNode, createChartOptions(this.temperatureRecords, this.mode))
+        if (this.temperatureRecords.length > 0) {
+          Highcharts.chart(this.$refs.chartMountNode, createChartOptions(this.temperatureRecords, this.mode))
+        }
       }
     }
   }
