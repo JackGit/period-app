@@ -85,7 +85,7 @@
         enabled: false
       },
       tooltip: {
-        enabled: false,
+        enabled: true,
         crosshairs: true,
         shared: true
       },
